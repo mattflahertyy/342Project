@@ -3,6 +3,8 @@ from System import System
 from Location import Location
 import Registry
 import random
+from visualize import visualize_sensor_data
+
 
 def main():
     s = System()
@@ -20,6 +22,8 @@ def main():
     print("\nReading all citites temperatures:\n")
     for c in cities:
         s.readTemperature(c)
+
+    visualize_sensor_data(s.locations.deployments, s.temperatures)
 
 
 if __name__ == "__main__":
