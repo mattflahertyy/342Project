@@ -3,7 +3,7 @@ from System import System
 from Location import Location
 import Registry
 import random
-from visualize import visualize_sensor_data
+from visualizePlotly import see_map
 
 
 def main():
@@ -18,13 +18,13 @@ def main():
         newLocation = Location(cities[index])
         if newSensor.ID:
             s.deploySensor(newSensor, newLocation, (random.randint(-35, 40)))
-    
+
     print("\nReading all citites temperatures:\n")
     for c in cities:
         s.readTemperature(c)
 
-    visualize_sensor_data(s.locations.deployments, s.temperatures)
-
+    # visualize_sensor_data(s.locations.deployments, s.temperatures)
+    see_map(s.locations.deployments, s.temperatures)
 
 if __name__ == "__main__":
     main()
