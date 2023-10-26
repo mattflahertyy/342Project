@@ -8,18 +8,19 @@ AVAILABLE_CITIES = ['New York',
           'Philadelphia', 
           'San Antonio', 
           'San Diego', 
-          'Dallas', 
-          'San Jose', 
-          'Austin', 
+          'Dallas',
+          'San Jose',
+          'Austin',
           'Jacksonville',
-          'Fort Worth', 
-          'Columbus', 
-          'San Francisco', 
-          'Charlotte', 
-          'Indianapolis', 
-          'Seattle', 
-          'Denver', 
-          'Washington']
+          'San Francisco',
+          'Columbus',
+          'Fort Worth',
+          'Indianapolis',
+          'Charlotte',
+          'Seattle',
+          'Denver',
+          'Washington'
+          ]
 
 #existing sensors
-AVAILABLE_SENSORS = [(f'sensor#{i}') for i in range(100)]
+AVAILABLE_SENSORS = [(f'sensor#{i}') for i in range(7)]

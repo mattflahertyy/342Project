@@ -2,7 +2,7 @@ import plotly.graph_objects as go
 import random
 import Registry
 
-def see_map(system, errors):
+def see_map(system):
     fig = go.Figure()
    
     bubble_size = 30  # Larger bubble size
@@ -11,6 +11,7 @@ def see_map(system, errors):
     y = 15
     counter = 0
 
+    
     for location in Registry.AVAILABLE_CITIES:
         x_position = x
         y_position = y
