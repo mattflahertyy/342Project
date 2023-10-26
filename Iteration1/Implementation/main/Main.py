@@ -17,7 +17,7 @@ def main():
         index = random.randint(0, len(cities)-1)
         newLocation = Location(cities[index])
         if newSensor.ID:
-            s.deploySensor(newSensor, newLocation, (random.randint(-35, 40)))
+            s.deploySensor(newSensor, newLocation, (random.randint(-40, 40)))
 
     print("\nReading all citites temperatures:\n")
     for c in cities:

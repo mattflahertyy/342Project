@@ -23,19 +23,26 @@ def see_map(sensor_locations, temperatures):
         else:
             y += 15  # Increment y for the next bubble in the column
 
-        text = f"{sensor.ID}<br>{location.name}<br>{temperatures.findTemperature(sensor.ID):.2f}°C"
+        temp = temperatures.findTemperature(sensor.ID)
+        text = f"{sensor.ID}<br>{location.name}<br>{temp:.2f}°C"
 
+        blueVal = 255-3.1875*(temp+40)
+        redVal =3.1875*(temp+40)
+        color = [redVal, 0, blueVal]
         fig.add_trace(go.Scatter(
+
+            #marker=dict(size=bubble_size, color=[[255-3.1875*(temp+40),3.1875*(temp+40),0]])),
             x=[x_position],
             y=[y_position],
             mode='markers+text',
-            marker=dict(size=bubble_size, color='blue'),
+            marker=dict(size=bubble_size, color='rgb('+str(color[0])+','+str(color[1])+','+str(color[2])+')'),
             text=text,
             name=f"{sensor.ID} - {location.name}",
             textposition="middle right",
         ))
 
     # Create data for grey bubbles with the same pattern
+    #for no_sensor_location in set(Registry.AVAILABLE_CITIES)-set([location.name for sensor, location in sensor_locations]):
     for no_sensor_location in Registry.AVAILABLE_CITIES:
         x_position = x
         y_position = y
@@ -77,4 +84,19 @@ def see_map(sensor_locations, temperatures):
         height=height,
     )
 
+    # Add text containing errors below the map
+    fig.add_annotation(
+        x=0.5,
+        y=-0.1,
+        xref='paper',
+        yref='paper',
+        text='ERROR: Cannot connect to sensor network',
+        showarrow=False,
+        font=dict(
+            family='Arial',
+            size=16,
+            color='red'
+        )
+    )
+    
     fig.show()
