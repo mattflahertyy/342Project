@@ -20,13 +20,12 @@ class System():
         print("Sensor " + sensor.ID + " deployed at " + location.name+ ": ok")
 
 
-    def readTemperature(self, name):
-        
-        l = self.locations.findLocation(name)
+    def readTemperature(self, locationName):
+        l = self.locations.findLocation(locationName)
         if not l:
-            print("Location " + name + " not covered")
+            print("Location " + locationName + " not covered")
             return
-        sensor = self.locations.fromLocation(name)
+        sensor = self.locations.fromLocation(locationName)
         temperature = self.temperatures.findTemperature(sensor.ID) 
         print("Temperature at " + l.name + " is " + str(temperature)+ ": ok")
         return temperature

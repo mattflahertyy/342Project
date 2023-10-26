@@ -24,7 +24,7 @@ def main():
         s.readTemperature(c)
 
     # visualize_sensor_data(s.locations.deployments, s.temperatures)
-    see_map(s.locations.deployments, s.temperatures)
+    see_map(s,["err init string", "err init sensor","err init string", "err init sensor","err init string", "err init sensor"])
 
 if __name__ == "__main__":
     main()
