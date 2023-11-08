@@ -1,0 +1,1 @@
+AVAILABLE_SENSORS = [(f'sensor#{i}') for i in range(8)]
