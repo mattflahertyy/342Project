@@ -25,8 +25,12 @@ def main():
         elif user_choice == 2:
             viewAllSensors()
         elif user_choice == 3:
-            deployASensor(s)
-            see_map(s)
+            try:
+                deployASensor(s)
+                see_map(s)
+            except Exception as e:
+                print(e)
+            
         elif user_choice == 4:
             readATemperature(s)
         elif user_choice == 5:
@@ -34,7 +38,7 @@ def main():
             see_map(s)
         elif user_choice == 6:
             viewAllLocationTemperatures(s)
-            see_location_temperatures(s)
+            see_location_temperatures()
         else:
             default_option()
 
