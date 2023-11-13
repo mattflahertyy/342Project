@@ -52,7 +52,7 @@ def main():
 
     print("Reading all location temperatures")
     for lt in s.getAllLocationTemperatures():
-        print("temperature in " +lt[0] + " is: " +str(lt[1])+ " °C")
+        print("temperature in " +lt.location.name + " is: " +str(lt.temperature.value)+ " °C")
 
     see_map(s)
 if __name__ == "__main__":

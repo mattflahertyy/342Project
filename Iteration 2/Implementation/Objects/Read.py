@@ -11,7 +11,7 @@ class Read():
     def findTemperature(self, sensorID):
         for measurement in self.measurements:
             if measurement.sensor.sensorID == sensorID:
-                return measurement.temperature.value
+                return measurement.temperature
     def pop(self,sensorID):
         for measurement in self.measurements:
             if measurement.sensor.sensorID == sensorID:

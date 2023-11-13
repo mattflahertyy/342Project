@@ -4,6 +4,7 @@ from Objects.Location import Location
 from Objects.Read import Read
 from Objects.Map import Map
 from Objects.Sensor import Sensor
+from Objects.LocationTemperature import LocationTemperature
 
 
 class TempMonitor():
@@ -36,7 +37,7 @@ class TempMonitor():
             print(f"\033[91m    Location {name} not covered\033[0m")
             return
         sensor = self.map.fromLocation(name)
-        temperature = self.read.findTemperature(sensor.sensorID)
+        temperature = self.read.findTemperature(sensor.sensorID).value
         print("Temperature at " + l.name + " is " + str(temperature) + ": ok")
         return temperature
 
@@ -67,6 +68,7 @@ class TempMonitor():
             if t is None:
                 print(f"\033[91m    Location {deployment.location.name} has no temperature\033[0m")
                 continue
-            locationTemperature.append((deployment.location.name, t))
+
+            locationTemperature.append(LocationTemperature(deployment.location, t))
         return locationTemperature
 
