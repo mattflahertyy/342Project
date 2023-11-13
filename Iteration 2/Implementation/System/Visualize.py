@@ -4,9 +4,7 @@ import Registries.LocationRegistry as LocationRegistry
 
 def see_map(system):
     fig = go.Figure()
-   
     bubble_size = 30  # Larger bubble size
-
     x = 10
     y = 15
     counter = 0
@@ -48,21 +46,6 @@ def see_map(system):
     num_columns = len(LocationRegistry.AVAILABLE_CITIES) // 5
     width = max(1250, 50 * num_columns)  # Adjusted width to 1250
     height = 800
-
-    # if len(errors)>0:
-    #     bottom_text = go.Scatter(
-    #     x=[0],  # Centered horizontally
-    #     y=[-5],  # Adjust the vertical position as needed
-    #     mode='text',
-    #     text=["ERRORS:\n"+'\n'.join(errors)],
-    #     textfont=dict(size=12,color='red'),  # Adjust the font size as needed
-    #     textposition="middle center",
-
-
-    #     )
-    #     fig.add_trace(bottom_text)
-    #         # Initialize a variable to keep track of the current y position
-
     fig.update_layout(
         title='Sensor Temperature System',
         xaxis_title='',
@@ -76,3 +59,6 @@ def see_map(system):
     )
 
     fig.show()
+    
+def see_location_temperatures():
+    pass
