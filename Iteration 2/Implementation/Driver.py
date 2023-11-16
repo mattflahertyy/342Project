@@ -37,6 +37,7 @@ def main():
             replaceASensor(s)
             see_map(s)
         elif user_choice == 6:
+            viewAllLocationTemperatures(s)
             see_location_temperatures(s.getAllLocationTemperatures())
         else:
             default_option()
@@ -69,6 +70,9 @@ def replaceASensor(s):
     s.replaceSensor(oldSensorID, newSensorID)
 
 def viewAllLocationTemperatures(s):
+    if not s.getAllLocationTemperatures():
+        print("No temperatures to show")
+        return
     for lt in s.getAllLocationTemperatures():
         print("temperature in " +lt.location.name + " is: " +str(lt.temperature.value)+ " °C")
 
