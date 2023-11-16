@@ -1,1 +1,1 @@
-AVAILABLE_SENSORS = [(f'sensor#{i}') for i in range(8)]
+AVAILABLE_SENSORS = [str(i) for i in range(8)]

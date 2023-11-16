@@ -37,8 +37,7 @@ def main():
             replaceASensor(s)
             see_map(s)
         elif user_choice == 6:
-            viewAllLocationTemperatures(s)
-            see_location_temperatures()
+            see_location_temperatures(s.getAllLocationTemperatures())
         else:
             default_option()
 
