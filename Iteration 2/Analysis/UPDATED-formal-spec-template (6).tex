@@ -1,0 +1,168 @@
+\documentclass[12pt]{article}
+\usepackage[top=1in,bottom=1in,left=1in,right=1in]{geometry}
+\usepackage{alltt}
+\usepackage{array}	
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{verbatim}
+\usepackage{setspace}
+\usepackage{listings}
+\usepackage{amssymb,amsmath, amsthm}
+\usepackage{oz}
+\usepackage[cc]{titlepic}
+\usepackage{fancyvrb}
+\usepackage{hyperref}
+
+\title{SOEN 342 - Sections H and II:\\Software Requirements and Specifications\\
+	\ \\
+	Project}
+\author{Lauren Rigante, Matthew Flaherty, Leo Brodeur}
+\date{\today}
+
+\begin{spacing}{1.5}
+	\begin{document}
+		\maketitle
+		
+		\newpage
+
+		\section{Partial formal specification in Z}
+		
+		The formal specification of the system introduces the following three types:
+		
+		\[ SENSOR\_TYPE, LOCATION\_TYPE, TEMPERATURE\_TYPE  \]
+		
+		\noindent The system's (partial) formal specification is given in the Z language and it consists of schemas and the definitions of operations that constitute the system's exposed interface.
+		
+	
+		\subsection{Schemas}
+		
+		
+		\begin{schema}{TempMonitor}
+			deployed~:~\mathbb{P}~SENSOR\_TYPE\\
+			map : SENSOR\_TYPE \nrightarrow LOCATION\_TYPE\\
+			read : SENSOR\_TYPE  \nrightarrow TEMPERATURE\_TYPE\\
+			\where
+			deployed = \dom map\\
+			deployed = \dom read
+		\end{schema}
+		
+		
+		
+		\begin{schema}{DeploySensorOK}
+			\Delta TempMonitor\\
+			sensor? : SENSOR\_TYPE\\
+			location? : LOCATION\_TYPE\\
+			temperature? : TEMPERATURE\_TYPE
+			\where
+			sensor? \notin deployed\\
+			location? \notin \ran map\\
+			deployed' = deployed \cup \{ sensor? \}\\
+			map' = map \cup \{ sensor? \mapsto location? \}\\
+			read' = read \cup \{ sensor? \mapsto temperature? \}
+		\end{schema}
+		
+		
+		\begin{schema}{ReadTemperatureOK}
+			\Xi TempMonitor\\
+			location? : LOCATION\_TYPE\\
+			temperature! : TEMPERATURE\_TYPE
+			\where
+			location? \in \ran map\\
+			temperature! = read(map^{-1}(location?))\\
+		\end{schema}
+		
+		
+	
+		\begin{schema}{Success}
+			\Xi TempMonitor\\
+			response! : MESSAGE
+			\where
+			response!~=~'ok'\\
+		\end{schema}
+		
+		
+		
+		\begin{schema}{SensorAlreadyDeployed}
+			\Xi TempMonitor\\
+			sensor? : SENSOR\_TYPE\\
+			response! : MESSAGE
+			\where
+			sensor? \in deployed\\
+			response!~=~'Sensor~Already~deployed'\\
+		\end{schema}
+		
+		
+		
+		\begin{schema}{LocationAlreadyCovered}
+			\Xi TempMonitor\\
+			location? : LOCATION\_TYPE\\
+			response! : MESSAGE
+			\where
+			location? \in \ran map\\
+			response!~=~'Location~already~covered'
+		\end{schema}
+		
+		
+		
+		\begin{schema}{LocationUnknown}
+			\Xi TempMonitor\\
+			location? : LOCATION\_TYPE\\
+			response! : MESSAGE
+			\where
+			location? \notin \ran map\\
+			response!~=~'Location~not~covered'
+		\end{schema}
+		
+		
+		\begin{schema}{ReplaceSensorOK}
+			\Delta TempMonitor\\
+			oldSensor? : SENSOR\_TYPE\\
+			sensor? : SENSOR\_TYPE\\
+			\where
+			oldSensor? \in deployed\\
+			sensor?\notin deployed\\
+			deployed' = (deployed \setminus \{ oldSensor? \}) \cup \{ sensor? \} \\
+  			map' = (map\setminus\{oldSensor? \mapsto map(oldSensor?)\} \cup \{sensor? \mapsto map(oldSensor?)\} \\
+ 		    	read' = (read \setminus \{ oldSensor? \mapsto read(oldSensor?)\} \cup \{sensor? \mapsto read(oldSensor?)\} \\
+		\end{schema}
+
+
+		
+		\begin{schema}{SensorNotFound}
+ 		 \Xi TempMonitor\\
+		 oldSensor?: SENSOR\_TYPE\\
+  		  response! : MESSAGE\\
+  		 \where
+  		  oldSensor? \notin deployed\\
+		  response! = 'sensor~not~found'
+		 \end{schema}
+
+		
+		\begin{schema}{GetTemperatureReadingsOK}
+  		\Xi TempMonitor\\	
+  		temperatureReadings! : \power (LOCATION\_TYPE \cross TEMPERATURE\_TYPE)\\
+ 		\where
+ 		 temperatureReadings! = \{ loc : \dom map | loc \in \ran map @ loc \mapsto read(map^{-1}(loc)) \}
+		\end{schema}
+
+
+		\subsection{Operations}
+		
+		\[ DeploySensor~\hat{=}~\\
+		~~~(DeploySensorOK \wedge Success)~ \oplus\\
+		~~~(SensorAlreadyDeployed \vee LocationAlreadyCovered) \]
+		
+
+		\[ReplaceSensor \hat{=}~\\
+ 		~~~ (ReplaceSensorOK \land Success)~ \oplus\\
+		~~ (SensorNotFound \vee SensorAlreadyDeployed)\]
+
+
+		\[ ReadTemperature~\hat{=}~\\
+		~~~(ReadTemperatureOK \wedge Success) \oplus LocationUnknown \]
+
+		\[ GetTemperatureReadings \hat{=}~\\
+		~~~(GetTemperatureReadingsOK \land Success)\]
+		
+\end{spacing}
+\end{document}
